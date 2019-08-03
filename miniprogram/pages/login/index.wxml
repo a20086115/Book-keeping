@@ -1,0 +1,15 @@
+<view class="login-container">
+	<view class="login" wx:if="{{ !logged }}">
+		<view class="app-info">
+			<image class="app-logo" src="../../images/create-collection.png" />
+			<text class="app-name">共享账单 多人记账</text>
+		</view>
+		<view class="alert">
+			<view class="alert-title">网页由该小程序开发，请确认授权以下信息</view>
+			<view class="alert-desc">
+				<view class="alert-text">获得你的公开信息（昵称、头像等）</view>
+			</view>
+		</view>
+		<button class="weui-btn" type="primary" open-type='getUserInfo' bindgetuserinfo="getUserInfoFun" bindtap="login">确认登录</button>
+	</view>
+</view>

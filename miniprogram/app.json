@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/start/index",
+    "pages/login/index",
+    "pages/index/index",
+    "pages/insert/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1AA7EC",
+    "navigationBarTitleText": "云账单",
+    "navigationBarTextStyle": "white"
+  },
+  "networkTimeout": {
+    "request": 10000
+  },
+  "tabBar": {
+    "color": "#000000",
+    "selectedColor": "#3ce0fb",
+    "backgroundColor": "#fefefe",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "账本",
+        "iconPath": "images/tab/mall.png",
+        "selectedIconPath": "images/tab/mall1.png"
+      },
+      {
+        "pagePath": "pages/insert/index",
+        "text": "记一笔",
+        "iconPath": "images/tab/insert.png",
+        "selectedIconPath": "images/tab/insert1.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "我的信息",
+        "iconPath": "images/tab/my.png",
+        "selectedIconPath": "images/tab/my1.png"
+      }
+    ]
+  }
+}
+ 
