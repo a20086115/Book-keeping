@@ -46,7 +46,7 @@ page {
 }
 
 .request-text {
-  color: #222;
+  color: rgb(34, 34, 34);
   padding: 20rpx 0;
   font-size: 24rpx;
   line-height: 36rpx;
