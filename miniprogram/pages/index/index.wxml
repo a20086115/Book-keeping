@@ -3,6 +3,7 @@
 
   <!-- 用户 openid -->
   <view class="userinfo">
+  <view>这是主页index</view>
     <button 
       open-type="getUserInfo" 
       bindgetuserinfo="onGetUserInfo"
