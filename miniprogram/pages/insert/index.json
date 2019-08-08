@@ -1,3 +1,9 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "mp-cell": "../../components/cell/cell",
+    "mp-cells": "../../components/cells/cells",
+    "mp-checkbox-group": "../../components/checkbox-group/checkbox-group",
+    "mp-checkbox": "../../components/checkbox/checkbox",
+    "mp-form": "../../components/form/form"
+  }
 }

@@ -1,7 +1,7 @@
 <view class="login-container">
 	<view class="login" wx:if="{{ !logged }}">
 		<view class="app-info">
-			<image class="app-logo" src="../../images/create-collection.png" />
+			<image class="app-logo" src="../../images/tab/insert.png" />
 			<text class="app-name">共享账单 多人记账</text>
 		</view>
 		<view class="alert">

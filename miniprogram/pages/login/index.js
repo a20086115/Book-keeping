@@ -25,7 +25,7 @@ Page({
         }
       }).then(function (e) {
         wx.hideLoading();
-        wx.switchTab({url:'/pages/index/index'})
+        wx.switchTab({ url: '/pages/index/index' })
       })
     } else {
       wx.showModal({
