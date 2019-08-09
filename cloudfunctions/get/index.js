@@ -3,10 +3,15 @@ cloud.init()
 const db = cloud.database()
 // 根据表名和query对象查询数据
 exports.main = async (event, context) => {
+  let openId = event.userInfo.openId;
   let tbName = event.tbName; // 要查询的表名
   let query = event.query;  // 要查询的query条件
+  // 如果openId为ture, 则把openId添加到查询条件
+  if(query.openId){
+    query.openId = openId
+  }
   try {
-    return await db.collection('users').where(query).get()
+    return await db.collection(tbName).where(query).get()
   } catch (e) {
     console.error(e)
   }

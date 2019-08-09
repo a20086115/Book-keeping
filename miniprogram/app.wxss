@@ -6,3 +6,9 @@
   align-items: center;
   box-sizing: border-box;
 } 
+.bg-gray{
+  background: rgb(244,244,244)
+}
+page {
+  background: #f6f6f6;
+}

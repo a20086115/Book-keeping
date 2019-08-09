@@ -1,13 +1,12 @@
-//index.js
-const app = getApp()
-
+import { cloud as CF} from '../../utils/cloudFunction.js'
 Page({
   data: {
     avatarUrl: './user-unlogin.png',
     userInfo: {},
     logged: false,
     takeSession: false,
-    requestResult: ''
+    requestResult: '',
+    bookList:[]
   },
 
   onLoad: function() {
@@ -17,7 +16,14 @@ Page({
       })
       return
     }
-
+    console.log(CF)
+    // 查询账本信息
+    CF.get("books", {openId: true}, (e) => {
+      this.setData({
+        bookList: e.result.data
+      })
+      console.log(this.data)
+    })
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -35,7 +41,12 @@ Page({
       }
     })
   },
-
+  createBook: function(){
+    console.log("创建账本")
+    wx.navigateTo({
+      url: '/pages/createBook/index'
+    })
+  },
   onGetUserInfo: function(e) {
     if (!this.logged && e.detail.userInfo) {
       this.setData({

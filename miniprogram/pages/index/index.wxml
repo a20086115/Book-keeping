@@ -23,4 +23,18 @@
     </view>
   </view>
 
+
+  <!-- 上传图片 -->
+  <view class="uploader">
+    <view class="uploader-text" bindtap="createBook">
+      <text>创建账本</text>
+    </view>
+  </view>
+
+    <!-- 账本列表 -->
+  <view class="uploader">
+    <view class="uploader-text" wx:for="{{ bookList}}">
+      <text>{{index}}. {{item.name}}</text>
+    </view>
+  </view>
 </view>

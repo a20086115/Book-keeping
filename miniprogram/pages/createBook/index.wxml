@@ -1,0 +1,17 @@
+<view class="bg-gray">
+  <view style='text-align:center;padding:30rpx;'>
+    创建账本
+  </view>
+  <van-cell-group>
+    <van-field
+      label="账本名称"
+      value="{{ bookName }}"
+      placeholder="请输入账本名"
+      border="{{ false }}"
+      bind:change="onChange"
+    />
+  </van-cell-group>
+
+  <van-button loading='{{loading}}' type="primary" bindtap="btnClick">保存</van-button>
+</view>
+
