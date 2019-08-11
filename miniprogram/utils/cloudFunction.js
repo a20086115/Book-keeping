@@ -8,8 +8,8 @@ var cloud = {
     wx.cloud.callFunction({
       name: 'insert',
       data: {
-        tbName: tbName, // 数据库表名
-        data: data // 要存储的内容
+        "tbName": tbName, // 数据库表名
+        "data": data // 要存储的内容
       }
     }).then(function (e) {
       wx.hideLoading();

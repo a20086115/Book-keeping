@@ -19,7 +19,7 @@ Page({
     // 创建账本
     CF.insert("books", {
       name: this.data.bookName,
-      children: []
+      homie: []
     },function(){
 
     })

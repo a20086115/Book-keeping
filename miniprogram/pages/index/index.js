@@ -10,20 +10,14 @@ Page({
   },
 
   onLoad: function() {
-    if (!wx.cloud) {
-      wx.redirectTo({
-        url: '../chooseLib/chooseLib',
-      })
-      return
-    }
-    console.log(CF)
     // 查询账本信息
     CF.get("books", {openId: true}, (e) => {
       this.setData({
         bookList: e.result.data
       })
-      console.log(this.data)
+      console.log(11,this.data)
     })
+    
     // 获取用户信息
     wx.getSetting({
       success: res => {
