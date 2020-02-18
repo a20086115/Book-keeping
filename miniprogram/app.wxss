@@ -6,9 +6,20 @@
   align-items: center;
   box-sizing: border-box;
 } 
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+} 
 .bg-gray{
   background: rgb(244,244,244)
 }
 page {
   background: #f6f6f6;
+}
+
+.margin-top-50{
+  margin-top: 50rpx;
+}
+.margin-bottom-50{
+  margin-bottom: 50rpx;
 }

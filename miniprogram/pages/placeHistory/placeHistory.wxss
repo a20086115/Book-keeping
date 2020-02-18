@@ -1,0 +1,5 @@
+.van-row{
+  border-bottom: 2rpx solid gainsboro;
+  padding:2rpx 2rpx 2rpx 10rpx;
+  background: white;
+}

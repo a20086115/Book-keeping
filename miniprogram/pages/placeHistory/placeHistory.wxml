@@ -1,0 +1,12 @@
+<!--miniprogram/pages/placeHistory/placeHistory.wxml-->
+<van-search value="{{ value }}" placeholder="请输入搜索关键词" />
+
+<scroll-view scroll-y="true" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+    <van-row wx:for="{{historys}}" class="itemRow" >
+      <van-col span="16">{{item.createon}}</van-col>
+      <van-col wx:if="{{query.openId}}" span="8">{{item.placeName}}</van-col>
+      <van-col wx:if="{{query.placeId}}" span="8">{{item.personName}}</van-col>
+    </van-row>
+</scroll-view>
+
+  <van-toast id="van-toast" />

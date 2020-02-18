@@ -1,12 +1,20 @@
 {
   "pages": [
-    "pages/start/index",
-    "pages/login/index",
     "pages/index/index",
+    "pages/addPlace/addPlace",
+    "pages/login/index",
     "pages/createBook/index",
-    "pages/insert/index"
+    "pages/shequ/shequ",
+    "pages/placeCenter/placeCenter",
+    "pages/placeHistory/placeHistory",
+    "pages/placeQrcode/placeQrcode",
+    "pages/access/access",
+    "pages/people/people",
+    "pages/peopleInfo/peopleInfo"
   ],
   "usingComponents": {
+    "van-grid": "./miniprogram_npm/vant-weapp/grid/index",
+    "van-grid-item": "./miniprogram_npm/vant-weapp/grid-item/index",
     "van-action-sheet": "./miniprogram_npm/vant-weapp/action-sheet/index",
     "van-area": "./miniprogram_npm/vant-weapp/area/index",
     "van-badge": "./miniprogram_npm/vant-weapp/badge/index",
@@ -59,38 +67,12 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#1AA7EC",
-    "navigationBarTitleText": "云账单",
+    "navigationBarTitleText": "智能出入登记",
     "navigationBarTextStyle": "white",
     "backgroundColor": "#f6f6f6"
   },
   "networkTimeout": {
     "request": 10000
-  },
-  "tabBar": {
-    "color": "#000000",
-    "selectedColor": "#3ce0fb",
-    "backgroundColor": "#f6f6f6",
-    "borderStyle": "white",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "账本",
-        "iconPath": "images/tab/mall.png",
-        "selectedIconPath": "images/tab/mall1.png"
-      },
-      {
-        "pagePath": "pages/insert/index",
-        "text": "记一笔",
-        "iconPath": "images/tab/insert.png",
-        "selectedIconPath": "images/tab/insert1.png"
-      },
-      {
-        "pagePath": "pages/index/index",
-        "text": "我的信息",
-        "iconPath": "images/tab/my.png",
-        "selectedIconPath": "images/tab/my1.png"
-      }
-    ]
   },
   "sitemapLocation": "sitemap.json"
 }

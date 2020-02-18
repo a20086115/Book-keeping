@@ -1,0 +1,20 @@
+<!--miniprogram/pages/addPlace/addPlace.wxml-->
+<view class="pageContainer">
+  <van-cell-group>
+    <van-field id="placename" value="{{ currentPlace.placename }}" bind:change="onValueChange" clearable label="名称" placeholder="请输入名称" />
+    <van-field id="area" value="{{ currentPlace.area }}" center clearable disabled label="省市区" placeholder="请选择省市区地址"  use-button-slot>
+      <van-button slot="button" size="small" type="info" bindtap="selectArea">点击选择地址</van-button>
+    </van-field>
+    <van-field id="address" value="{{ currentPlace.address }}" clearable label="地址" placeholder="请输入详细地址" bind:change="onValueChange"/>
+    <van-field id="username" value="{{ currentPlace.username }}" clearable label="负责人" placeholder="请输入负责人姓名" bind:change="onValueChange"/>
+    <van-field id="phone" value="{{ currentPlace.phone }}" type="number" clearable label="手机号" placeholder="请输入手机号" error-message="{{ errorPhone}}  "bind:change="onValueChange" />
+    
+    <van-popup show="{{ show_area }}" position="bottom" bind:close="onCloseArea" >
+      <van-area area-list="{{ areaList }}" bind:confirm="onConfirmArea" bind:cancel="onCloseArea" value="370811" />
+    </van-popup>
+    
+  </van-cell-group>
+
+  <van-button class="margin-top-50" type="info" size="large" bindtap="addPlace">{{ buttonText }}</van-button>
+  <van-toast id="van-toast" />
+</view>

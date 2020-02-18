@@ -6,18 +6,42 @@ Page({
     logged: false,
     takeSession: false,
     requestResult: '',
-    bookList:[]
+    bookList:[],
+    modules: [{
+      url: "/pages/people/people",
+      name: "我是居民",
+      icon: "../../../images/jumin.png"
+    }, {
+        url: "/pages/people/people?type=1",
+      name: "我是员工",
+      icon: "../../../images/yuangong.png"
+    }, {
+        url: "/pages/shequ/shequ?type=1",
+      name: "社区管理",
+        icon: "../../../images/shequ.png"
+      }, {
+        url: "/pages/shequ/shequ?type=2",
+      name: "集团管理",
+      icon: "../../../images/jituan.png"
+      }, {
+        url: "/pages/shequ/shequ?type=3",
+      name: "学校管理",
+      icon: "../../../images/xuexiao.png"
+      }, {
+        url: "/pages/shequ/shequ?type=4",
+      name: "乡镇管理",
+      icon: "../../../images/controlparameter.png"
+      // },{
+      //   url: "/pages/access/access",
+      //   name: "登记测试",
+      //   icon: "../../../images/xiangzhen.png"
+      }]
   },
 
-  onLoad: function() {
-    // 查询账本信息
-    CF.get("books", {openId: true}, (e) => {
-      this.setData({
-        bookList: e.result.data
-      })
-      console.log(11,this.data)
-    })
-    
+  onLoad: function (query) {
+    console.log(query)
+
+
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -25,21 +49,23 @@ Page({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo
-              })
+              if(res.userInfo.avatarUrl){
+                this.setData({
+                  avatarUrl: res.userInfo.avatarUrl,
+                  userInfo: res.userInfo
+                })
+              }
             }
           })
         }
       }
     })
-  },
-  createBook: function(){
-    console.log("创建账本")
-    wx.navigateTo({
-      url: '/pages/createBook/index'
-    })
+
+    if (query.scene) {
+      wx.navigateTo({
+        url: '/pages/access/access?scene=' + query.scene
+      })
+    }
   },
   onGetUserInfo: function(e) {
     if (!this.logged && e.detail.userInfo) {
@@ -49,55 +75,5 @@ Page({
         userInfo: e.detail.userInfo
       })
     }
-  },
-  // 上传图片
-  doUpload: function () {
-    // 选择图片
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
-
-        wx.showLoading({
-          title: '上传中',
-        })
-
-        const filePath = res.tempFilePaths[0]
-        
-        // 上传图片
-        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
-        wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', res)
-
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-            
-            wx.navigateTo({
-              url: '../storageConsole/storageConsole'
-            })
-          },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        })
-
-      },
-      fail: e => {
-        console.error(e)
-      }
-    })
-  },
-
+  }
 })

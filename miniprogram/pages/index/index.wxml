@@ -1,40 +1,21 @@
 <!--index.wxml-->
 <view class="container">
 
-  <!-- 用户 openid -->
-  <view class="userinfo">
-  <view>这是主页index</view>
+  <!-- 头部信息 -->
+  <view class="head container ">
     <button 
       open-type="getUserInfo" 
       bindgetuserinfo="onGetUserInfo"
-      class="userinfo-avatar"
+      class="cu-avatar xl round margin-top-50"
       style="background-image: url({{avatarUrl}})"
+      size="default"
     ></button>
-  </view>
-
-
-  <!-- 上传图片 -->
-  <view class="uploader">
-    <view class="uploader-text" bindtap="doUpload">
-      <text>上传图片</text>
-    </view>
-    <view class="uploader-container" wx:if="{{imgUrl}}">
-      <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
+    <view class="text-center  margin-top-50 margin-bottom-50">
+      {{userInfo.nickName?userInfo.nickName:'点击头像登录'}}
     </view>
   </view>
 
-
-  <!-- 上传图片 -->
-  <view class="uploader">
-    <view class="uploader-text" bindtap="createBook">
-      <text>创建账本</text>
-    </view>
-  </view>
-
-    <!-- 账本列表 -->
-  <view class="uploader">
-    <view class="uploader-text" wx:for="{{ bookList}}">
-      <text>{{index}}. {{item.name}}</text>
-    </view>
-  </view>
+  <van-grid column-num="2"  clickable="true" gutter="{{ 10 }}" style="width:100%;margin-top:10px;">
+    <van-grid-item style="" wx:key="{{item.name}}" wx:for="{{modules}}" link-type="navigateTo" url="{{item.url}}" icon="{{item.icon}}" text="{{item.name}}" />
+  </van-grid>
 </view>

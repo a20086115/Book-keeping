@@ -2,7 +2,7 @@
 	<view class="login" wx:if="{{ !logged }}">
 		<view class="app-info">
 			<image class="app-logo" src="../../images/tab/insert.png" />
-			<text class="app-name">共享账单 多人记账</text>
+			<text class="app-name">智能出入登记</text>
 		</view>
 		<view class="alert">
 			<view class="alert-title">网页由该小程序开发，请确认授权以下信息</view>

@@ -7,6 +7,84 @@ page {
   justify-content: flex-start;
 }
 
+.head{
+  margin:30rpx;
+}
+
+/* ==================
+          头像
+ ==================== */
+
+.cu-avatar {
+	font-variant: small-caps;
+	margin: 0;
+	padding: 0;
+	display: inline-flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	background-color: #ccc;
+	color: var(--white);
+	white-space: nowrap;
+	position: relative;
+	width: 64rpx;
+	height: 64rpx;
+	background-size: cover;
+	background-position: center;
+	vertical-align: middle;
+	font-size: 1.5em;
+}
+
+.cu-avatar.sm {
+	width: 48rpx;
+	height: 48rpx;
+	font-size: 1em;
+}
+
+.cu-avatar.lg {
+	width: 96rpx;
+	height: 96rpx;
+	font-size: 2em;
+}
+
+.cu-avatar.xl {
+	width: 128rpx;
+	height: 128rpx;
+	font-size: 2.5em;
+}
+
+.cu-avatar .avatar-text {
+	font-size: 0.4em;
+}
+
+.cu-avatar-group {
+	direction: rtl;
+	unicode-bidi: bidi-override;
+	padding: 0 10rpx 0 40rpx;
+	display: inline-block;
+}
+
+.cu-avatar-group .cu-avatar {
+	margin-left: -30rpx;
+	border: 4rpx solid var(--ghostWhite);
+	vertical-align: middle;
+}
+
+.cu-avatar-group .cu-avatar.sm {
+	margin-left: -20rpx;
+	border: 1rpx solid var(--ghostWhite);
+}
+/* pages/center/center.wxss */
+.userinfo-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  background-size: cover;
+  background-color: white;
+}
+
+
 .userinfo, .uploader, .tunnel {
   margin-top: 40rpx;
   height: 140rpx;
@@ -21,14 +99,6 @@ page {
   transition: all 300ms ease;
 }
 
-.userinfo-avatar {
-  width: 100rpx;
-  height: 100rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-  background-size: cover;
-  background-color: white;
-}
 
 .userinfo-avatar:after {
   border: none;

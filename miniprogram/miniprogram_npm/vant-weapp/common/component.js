@@ -19,7 +19,8 @@ function VantComponent(vantOptions = {}) {
         mounted: 'ready',
         relations: 'relations',
         destroyed: 'detached',
-        classes: 'externalClasses'
+        classes: 'externalClasses',
+        ready: "ready"
     });
     const { relation } = vantOptions;
     if (relation) {

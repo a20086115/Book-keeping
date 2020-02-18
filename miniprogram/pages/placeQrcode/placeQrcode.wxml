@@ -1,0 +1,11 @@
+  
+  
+  <view class="imageview">
+      <image src="{{imageurl}}" mode="aspectFill"></image>
+  </view>
+  
+  <van-button class="margin-top-50" type="info" size="large" bindtap="saveQrcode">保存二维码</van-button>
+
+  <view class=" margin-top-50 ">
+    <view class="qrcodeInfo">将该二维码保存到手机相册后，自行通过打印机打印该二维码，可将该二维码张贴在社区/小区出入口处，方便用户扫描登记。</view>
+  </view>

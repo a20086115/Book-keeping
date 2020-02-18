@@ -1,0 +1,25 @@
+<view class="pageContainer">
+  <van-cell-group>
+    <view class="placeHeader">当前进出单位</view>
+    <van-field id="placename" value="{{ currentPlace.placename }}" disabled clearable label="名称" placeholder="请输入名称" />
+    <van-field id="username" value="{{ currentPlace.username }}" disabled label="负责人" placeholder="负责人姓名" bind:change="onValueChange"/>
+    <van-field id="phone" value="{{ currentPlace.phone }}" disabled clearable label="负责人手机号" placeholder="负责人手机号" error-message="{{ errorPhone}}  "/>
+    
+    <view class="placeHeader">个人信息</view>
+    <van-field id="name" value="{{ currentPerson.name }}" bind:change="onValueChange" clearable label="姓名" placeholder="姓名" />
+    <van-field id="area" value="{{ currentPerson.area }}" center clearable disabled label="省市区" placeholder="请选择省市区地址"  use-button-slot>
+      <van-button slot="button" size="small" type="info" bindtap="selectArea">点击选择地址</van-button>
+    </van-field>
+    <van-field id="address" value="{{ currentPerson.address }}" clearable label="详细地址" placeholder="请输入详细地址" bind:change="onValueChange"/>
+    <van-field id="idcard" value="{{ currentPerson.idcard }}" clearable label="身份证号" placeholder="请输入身份证号" bind:change="onValueChange"/>
+    <van-field id="phone" value="{{ currentPerson.phone }}" clearable label="手机号"  type="number" placeholder="请输入手机号" error-message="{{ errorPhone}}  "bind:change="onValueChange" />
+    
+    <van-field wx:if="{{currentPlace.type == '2'}}" id="jobNumber" value="{{ currentPerson.jobNumber }}" clearable label="工号"   placeholder="请输入工号" bind:change="onValueChange" />
+    <van-popup show="{{ show_area }}" position="bottom" bind:close="onCloseArea" >
+      <van-area area-list="{{ areaList }}" bind:confirm="onConfirmArea" bind:cancel="onCloseArea" value="370811" />
+    </van-popup>
+  </van-cell-group>
+
+  <van-button class="margin-top-50" type="info" size="large" bindtap="addHistory"> 提交</van-button>
+  <van-toast id="van-toast" />
+</view>

@@ -1,0 +1,5 @@
+<view class="container">
+  <van-grid column-num="2" square="{{true}}" clickable="true" gutter="{{ 10 }}" style="width:100%;margin-top:10px;">
+    <van-grid-item style="" wx:key="{{item.placename}}" wx:for="{{places}}" link-type="navigateTo" url="{{item.url}}" icon="{{item.icon}}" text="{{item.placename}}" />
+  </van-grid>
+</view>

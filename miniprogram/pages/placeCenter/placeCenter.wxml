@@ -1,0 +1,8 @@
+<!--miniprogram/pages/placeCenter/placeCenter.wxml-->
+<view class="container">
+  <van-grid column-num="2"  clickable="true" gutter="{{ 10 }}" style="width:100%;margin-top:10px;">
+    <van-grid-item style="" wx:key="{{item.name}}" wx:for="{{modules}}" link-type="navigateTo" url="{{item.url}}" icon="{{item.icon}}" text="{{item.name}}" />
+  </van-grid>
+
+  
+</view>

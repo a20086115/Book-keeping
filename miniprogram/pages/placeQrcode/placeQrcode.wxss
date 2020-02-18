@@ -1,0 +1,13 @@
+ .imageview{
+  margin: 20rpx;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+} 
+image{
+  height:200px;
+  width: 200px;
+}
+.qrcodeInfo{
+  padding:20rpx;
+}
