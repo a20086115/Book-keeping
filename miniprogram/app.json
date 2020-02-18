@@ -10,7 +10,8 @@
     "pages/placeQrcode/placeQrcode",
     "pages/access/access",
     "pages/people/people",
-    "pages/peopleInfo/peopleInfo"
+    "pages/peopleInfo/peopleInfo",
+    "pages/success/success"
   ],
   "usingComponents": {
     "van-grid": "./miniprogram_npm/vant-weapp/grid/index",

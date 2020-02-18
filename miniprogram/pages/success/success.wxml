@@ -1,0 +1,7 @@
+<view class="login-container">
+		<view class="app-info">
+			<image class="app-logo" src="../../images/success.png" />
+			<text class="app-name">登记成功</text>
+		</view>
+		<button class="weui-btn" type="primary"  bindtap="clickOk">返回首页</button>
+</view>

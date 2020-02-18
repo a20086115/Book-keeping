@@ -57,37 +57,26 @@ Page({
           placeName: _this.data.currentPlace.placename
         }
         CF.insert("history", obj, function (data) {
-          console.log("insert", data)
-          Toast({
-            type: 'success',
-            message: '提交成功',
-            duration: 3000,       // 持续展示 toast
-            onClose: () => {
-              console.log('执行OnClose函数')
-            }
-          });
+          wx.navigateTo({
+            url: '/pages/success/success',
+          })
         })
       } else {
         // 没有ID信息，先新增PEOPLE信息，再新增出入记录
         // 新增时将当前类型添加进去
         CF.insert("people", this.data.currentPerson, function (data) {
           console.log("insert", data)
+          _this.data.currentPerson._id = data.result._id
           var obj = {
-            personId: e.result._id,
+            personId: _this.data.currentPerson._id,
             placeId: _this.data.currentPlace._id,
             personName: _this.data.currentPerson.name,
             placeName: _this.data.currentPlace.placename
           }
-          CF.insert("history", obj, function (data) {
-            console.log("insert", data)
-            Toast({
-              type: 'success',
-              message: '提交成功', 
-              duration: 3000,       // 持续展示 toast
-              onClose: () => {
-                console.log('执行OnClose函数')
-              }
-            });
+          CF.insert("history", obj, function () {
+            wx.navigateTo({
+              url: '/pages/success/success',
+            })
           })
         })
        
