@@ -12,6 +12,7 @@ VantComponent({
     mixins: [link],
     props: {
         icon: String,
+        iconColor: String,
         dot: Boolean,
         info: null,
         text: String,

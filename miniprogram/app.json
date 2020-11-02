@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/lolRecords/lolRecords",
     "pages/index/index",
     "pages/addPlace/addPlace",
     "pages/login/index",
-    "pages/createBook/index",
     "pages/shequ/shequ",
     "pages/placeCenter/placeCenter",
     "pages/placeHistory/placeHistory",
@@ -11,7 +11,9 @@
     "pages/access/access",
     "pages/people/people",
     "pages/peopleInfo/peopleInfo",
-    "pages/success/success"
+    "pages/success/success",
+    "pages/lolRecords/addRecord",
+    "pages/lolAnalyse/lolAnalyse"
   ],
   "usingComponents": {
     "van-grid": "./miniprogram_npm/vant-weapp/grid/index",

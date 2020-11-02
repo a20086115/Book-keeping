@@ -13,6 +13,8 @@ App({
       })
     }
 
-    this.globalData = {}
+    this.globalData = {
+      CLOUD_ENV: ""
+    }
   }
 })

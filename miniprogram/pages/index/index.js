@@ -41,7 +41,6 @@ Page({
   onLoad: function (query) {
     console.log(query)
 
-
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -65,7 +64,11 @@ Page({
       wx.navigateTo({
         url: '/pages/access/access?scene=' + query.scene
       })
+    }else{
+
+      this.getModule();
     }
+
   },
   onGetUserInfo: function(e) {
     if (!this.logged && e.detail.userInfo) {
@@ -75,5 +78,22 @@ Page({
         userInfo: e.detail.userInfo
       })
     }
+  },
+  getModule:function(){
+    CF.get("field", {}, (e)=>{
+      if(e.result.data.length>0){
+        this.setData({
+          modules:[{
+              url: "/pages/people/people?type=1",
+              name: "我是员工",
+              icon: "../../../images/yuangong.png"
+            },{
+              url: "/pages/shequ/shequ?type=2",
+              name: "集团管理",
+              icon: "../../../images/jituan.png"
+            }]
+        })
+      }
+    })
   }
 })

@@ -32,10 +32,13 @@ Page({
         console.log(res.result.buffer);
         let imagebase64 = wx.arrayBufferToBase64(res.result.buffer);
         let imgUrl = 'data:image/jpg;base64,' + imagebase64;
-        _this.setData({
-          imageurl: imgUrl
+        _this.base64src(imgUrl, res =>{
+          _this.setData({
+            imageurl: res
+          })
+          wx.hideLoading();
         })
-        wx.hideLoading();
+       
       },
     })
   },
@@ -47,19 +50,19 @@ Page({
     wx.showLoading({
       title: '保存二维码中',
     })
-    _this.base64src(this.data.imageurl, res => {
-      wx.saveImageToPhotosAlbum({
-        filePath: res,
-        success(res) {
-          wx.showToast({
-            title: '保存成功',
-            icon: 'success',
-            duration: 2000
-          })
-        }
-      })
-      wx.hideLoading();
+    
+    wx.saveImageToPhotosAlbum({
+      filePath: this.data.imageurl,
+      success(res) {
+        wx.showToast({
+          title: '保存成功',
+          icon: 'success',
+          duration: 2000
+        })
+      }
     });
+
+    wx.hideLoading();
   },
   /**
    * 将base64格式图片转为url地址
