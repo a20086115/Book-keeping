@@ -1,0 +1,27 @@
+<!--miniprogram/pages/addPlace/addPlace.wxml-->
+<view class="pageContainer">
+
+  <view style="text-align:center">
+    <view >奖金池</view>
+    <view> {{money}} </view>
+  </view>
+
+  <van-cell-group>
+    <van-field wx:for="{{currentRecord.users}}"  type="digit" id="{{'users[' + index +'].value' }}" bind:change="onValueChange" value="{{ item.value }}"  clearable label="{{ item.name }}"   use-button-slot>
+      <van-button slot="button" data-index="{{index}}" bindtap="changeSup" size="small" icon="{{ item.sup ? 'star-o' : ''}}" type="info" > x {{item.xs}} = {{ item.calValue }}</van-button>
+    </van-field>
+
+    <van-field id="mvp" value="{{ currentRecord.mvp }} + {{currentRecord.winAmount}}" bind:change="onValueChange"  label="MVP" disabled />
+    <!-- <van-field id="winAmount" value="{{ currentRecord.winAmount }} " bind:change="onValueChange" disabled type="digit"  label="赢了" /> -->
+    <van-field id="pvm" value="{{ currentRecord.pvm }} - {{ currentRecord.loseAmount }}" bind:change="onValueChange" disabled label="PVM" />
+    <!-- <van-field id="loseAmount" value="{{ currentRecord.loseAmount }}" bind:change="onValueChange" disabled type="digit"  label="输了" /> -->
+    <van-cell bindtap="changeWin">
+      <van-checkbox id="win" value="{{ currentRecord.win }}"  bind:change="onValueChange" label-disabled>赢了</van-checkbox>
+    </van-cell>
+    
+
+  </van-cell-group>
+
+  <van-button class="margin-top-50" type="info" wx-if="{{!currentRecord._id}}" size="large" bindtap="addRecord">保存</van-button>
+  <van-toast id="van-toast" />
+</view>

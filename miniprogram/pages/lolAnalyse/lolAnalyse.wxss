@@ -1,0 +1,4 @@
+/* miniprogram/pages/lolAnalyse/lolAnalyse.wxss */
+.t-small{
+  font-size: 24rpx;
+}
