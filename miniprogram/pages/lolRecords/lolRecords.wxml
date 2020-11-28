@@ -1,7 +1,7 @@
-<van-search value="{{ value }}" placeholder="请输入搜索关键词" />
+<van-search value="{{ value }}" shape="round" background="#87CEEB" placeholder="请输入搜索关键词" />
 
 <view style="text-align:center">
-  <view >奖金池</view>
+  <view >奖金池:</view>
   <view> {{money}} </view>
 </view>
 
@@ -10,8 +10,8 @@
       <van-cell value="{{item.pvm}} - {{item.loseAmount}}" color="red" data-id="{{item._id}}" bindtap="goToDetail" is-link>
         <view slot="title">
         <view style="display:flex">
-          <van-tag wx:if="{{item.win}}" type="danger">胜</van-tag>
-          <van-tag wx:else="{{item.win}}" >负</van-tag>
+          <van-tag wx:if="{{item.win}}" mark type="success">胜</van-tag>
+          <van-tag wx:else="{{item.win}}" mark type="danger">败</van-tag>
           <view style="margin-left:10rpx">{{item.mvp}} + {{item.winAmount}}</view>
         </view>
         </view>
@@ -19,6 +19,6 @@
     </van-row>
 </scroll-view>
 
-<van-button bindtap="addRecord" class="floatButton1" icon="star-o" type="primary">新增</van-button>
-<van-button bindtap="goAnalyse" class="floatButton2" icon="star-o" type="primary">统计</van-button>
+<van-button bindtap="addRecord" class="floatButton1" icon="add-o" type="primary">新增</van-button>
+<van-button bindtap="goAnalyse" class="floatButton2" icon="info-o" type="info">统计</van-button>
 <van-toast id="van-toast" />

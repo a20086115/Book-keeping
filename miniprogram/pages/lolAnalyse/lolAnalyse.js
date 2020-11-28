@@ -89,7 +89,7 @@ Page({
         userList:userList
       })
   },
-  queryAllList(){
+  queryAllList(){ // 这个方法就把所有把数查出来了
     CF.ajax("getAll", {
       "tbName": 'lolRecord', // 数据库表名
       "query": {

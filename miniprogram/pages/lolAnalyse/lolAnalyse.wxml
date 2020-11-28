@@ -1,35 +1,31 @@
 <van-grid column-num="3">
   <van-grid-item icon="{{item.icon}}" text="{{ item.count }}" icon-color="{{currentIndex === index ? 'red' : ''}}" data-index="{{index}}" bindtap="clickTotalType"  wx:for="{{totalCountList}}" />
 </van-grid>
+
 <van-grid column-num="5" direction="horizontal">
   <!-- 表头 -->
   <van-grid-item icon="friends" text="姓名" />
-  <van-grid-item icon="checked" text="赢钱" />
-  <van-grid-item icon="clear" text="输钱" />
+  <!-- <van-grid-item name="/miniprogram/images/icon_sorts/守护者.jpg" text="赢钱" /> -->
+  <van-grid-item icon="checked" text="赢/场次" />
+  <van-grid-item icon="clear" text="输/场次" />
   <van-grid-item icon="fire" text="原始分" />
   <van-grid-item icon="gem" text="计算分" />
 </van-grid>
 
 <van-grid column-num="5"  wx:for="{{ userList }}"  direction="horizontal">
-
   <van-grid-item use-slot >
     <span class="t-small" > {{ item.name}} {{ item.times}}</span>
   </van-grid-item>
-
-   <van-grid-item use-slot >
-    <span class="t-small"> {{ item.winMoney  }}({{item.mvpTimes}})</span>
+  <van-grid-item use-slot >
+    <span class="t-small"> {{ item.winMoney  }}/{{item.mvpTimes}}</span>
   </van-grid-item>
-
-
-   <van-grid-item use-slot >
-    <span class="t-small"> {{ item.loseMoney }}({{item.pvmTimes}})</span>
+  <van-grid-item use-slot >
+    <span class="t-small"> {{ item.loseMoney }}/{{item.pvmTimes}}</span>
   </van-grid-item>
-
-   <van-grid-item use-slot >
+  <van-grid-item use-slot >
     <span class="t-small"> {{ item.point }}</span>
   </van-grid-item>
-  
-   <van-grid-item use-slot >
+  <van-grid-item use-slot >
     <span class="t-small"> {{ item.calPoint }}</span>
   </van-grid-item>
 </van-grid>

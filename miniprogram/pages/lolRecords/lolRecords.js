@@ -8,6 +8,7 @@ let canLoadMore = true;
 Page({
 
   /**
+   * 这个是列表界面
    * 页面的初始数据
    */
   data: {

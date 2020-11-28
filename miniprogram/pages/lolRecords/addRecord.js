@@ -5,6 +5,7 @@ import Toast from "../../miniprogram_npm/vant-weapp/toast/toast";
 Page({
 
   /**
+   * 这个是添加界面
    * 页面的初始数据
    */
   data: {
@@ -16,12 +17,12 @@ Page({
       winAmount: 0,
       loseAmount:0,
       users: [
-        { name: "鲨鱼辣椒", sup: true, xs: 0.85, value: 0, calValue: 0 },
-        { name: "金龟次郎", sup: false, xs: 0.95, value: 0, calValue: 0 },
-        { name: "蝎子莱莱", sup: false, xs: 0.75, value: 0, calValue: 0 },
-        { name: "蟑螂恶霸", sup: false, xs: 1.05, value: 0, calValue: 0 },
-        { name: "根根", sup: false, xs: 1.05, value: 0, calValue: 0 },
-        { name: "牛逼", sup: false, xs: 1, value: 0, calValue: 0 }
+        { name: "丶鲨鱼辣椒丶", sup: true, xs: 0.85, value: 0, calValue: 0 },
+        { name: "丶金龟次郎丶", sup: false, xs: 1.00, value: 0, calValue: 0 },
+        { name: "丶蝎子莱莱丶", sup: false, xs: 0.75, value: 0, calValue: 0 },
+        { name: "丶张狼恶霸丶", sup: false, xs: 1.05, value: 0, calValue: 0 },
+        { name: "丶根根", sup: false, xs: 1.05, value: 0, calValue: 0 },
+        { name: "算你牛笔让你走", sup: false, xs: 1, value: 0, calValue: 0 }
       ]
     }
   },
