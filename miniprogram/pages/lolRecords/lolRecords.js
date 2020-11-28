@@ -31,6 +31,11 @@ Page({
       url: '/pages/lolAnalyse/lolAnalyse',
     })
   },
+  goPlayer(){
+    wx.navigateTo({
+      url: '/pages/lolPlayers/lolPlayersList',
+    })
+  },
   addRecord(){
     wx.navigateTo({
       url: '/pages/lolRecords/addRecord',

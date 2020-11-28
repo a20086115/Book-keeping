@@ -2,6 +2,7 @@
 import  province_list from '../../utils/area.js'
 import { cloud as CF } from '../../utils/cloudFunction.js'
 import Toast from "../../miniprogram_npm/vant-weapp/toast/toast";
+let S_INDEX = 2; // 当前赛季
 Page({
 
   /**
@@ -37,7 +38,34 @@ Page({
     } else{
       // 查询一下奖金池额度
       this.queryMoney()
+
+      // 查询users系数
+      this.queryUsers()
     }
+  },
+  // 动态查询users 系数
+  queryUsers(){
+    CF.get("lolPlayer",{}, (e) =>{
+      let users = e.result.data;
+
+      // 补充基础信息
+      for(let user of users){
+        if(user.name.indexOf("鲨鱼") != -1) {
+          user.sup = true
+        }else{
+          user.sup = false;
+        }
+        user.value = 0;
+        user.calValue = 0;
+
+        delete user.openId
+        delete user.createon
+      }
+
+      this.setData({
+        "currentRecord.users": users
+      })
+    })
   },
   
   queryMoney(){
@@ -74,7 +102,8 @@ Page({
         },2000)
       })
     } else {
-      // 新增时将当前类型添加进去
+      // 新增
+      this.data.currentRecord.sIndex = S_INDEX;
       CF.insert("lolRecord", this.data.currentRecord, (data) => {
         console.log("insert", data)
         let diff = 0;
@@ -83,7 +112,8 @@ Page({
         }else{
           diff =  3
         }
-        CF.update("money", {}, {total: this.data.money+ diff}, ()=>{
+        let money = this.data.money + diff
+        CF.update("money", {}, {total: parseFloat(money.toFixed(2))}, ()=>{
           Toast.success('新增成功，即将返回'); 
           setTimeout(() => {
             wx.navigateBack()

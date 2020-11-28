@@ -1,0 +1,11 @@
+
+
+<van-row wx:for="{{users}}" wx:key="_id" class="itemRow" >
+  <van-cell value="{{item.xs}}" color="red" data-id="{{item._id}}" bindtap="goToDetail" is-link>
+    <view slot="title">
+        <view style="display:flex">
+          {{item.name}}
+        </view>
+    </view>
+  </van-cell>
+</van-row>

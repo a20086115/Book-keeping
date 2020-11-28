@@ -13,7 +13,9 @@
     "pages/peopleInfo/peopleInfo",
     "pages/success/success",
     "pages/lolRecords/addRecord",
-    "pages/lolAnalyse/lolAnalyse"
+    "pages/lolAnalyse/lolAnalyse",
+    "pages/lolPlayers/lolPlayersList",
+    "pages/lolPlayers/lolPlayerDetail"
   ],
   "usingComponents": {
     "van-grid": "./miniprogram_npm/vant-weapp/grid/index",
@@ -28,6 +30,8 @@
     "van-cell-group": "./miniprogram_npm/vant-weapp/cell-group/index",
     "van-checkbox": "./miniprogram_npm/vant-weapp/checkbox/index",
     "van-checkbox-group": "./miniprogram_npm/vant-weapp/checkbox-group/index",
+    "van-dropdown-menu": "./miniprogram_npm/vant-weapp/dropdown-menu/index",
+    "van-dropdown-item": "./miniprogram_npm/vant-weapp/dropdown-item/index",
     "van-col": "./miniprogram_npm/vant-weapp/col/index",
     "van-dialog": "./miniprogram_npm/vant-weapp/dialog/index",
     "van-field": "./miniprogram_npm/vant-weapp/field/index",

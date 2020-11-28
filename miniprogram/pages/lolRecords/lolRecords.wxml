@@ -19,6 +19,10 @@
     </van-row>
 </scroll-view>
 
-<van-button bindtap="addRecord" class="floatButton1" icon="add-o" type="primary">新增</van-button>
-<van-button bindtap="goAnalyse" class="floatButton2" icon="info-o" type="info">统计</van-button>
+<view class="floatButton1" style="display:flex;flex-direction:column">
+  <van-button bindtap="addRecord" icon="add-o" type="primary">新增</van-button>
+<van-button bindtap="goAnalyse" style="margin:20rpx 0;" icon="info-o" type="info">统计</van-button>
+<van-button bindtap="goPlayer" icon="info-o" type="warning">人员</van-button>
+</view>
+
 <van-toast id="van-toast" />

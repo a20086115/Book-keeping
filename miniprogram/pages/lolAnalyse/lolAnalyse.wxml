@@ -1,13 +1,15 @@
-<van-grid column-num="3">
-  <van-grid-item icon="{{item.icon}}" text="{{ item.count }}" icon-color="{{currentIndex === index ? 'red' : ''}}" data-index="{{index}}" bindtap="clickTotalType"  wx:for="{{totalCountList}}" />
-</van-grid>
+
+<van-dropdown-menu>
+  <van-dropdown-item value="{{ sIndex }}" bind:change="onIndexChange" options="{{ option1 }}" />
+  <van-dropdown-item value="{{ winIndex }}" bind:change="onWinIndexChange" options="{{ totalCountList }}" />
+</van-dropdown-menu>
 
 <van-grid column-num="5" direction="horizontal">
   <!-- 表头 -->
   <van-grid-item icon="friends" text="姓名" />
   <!-- <van-grid-item name="/miniprogram/images/icon_sorts/守护者.jpg" text="赢钱" /> -->
-  <van-grid-item icon="checked" text="赢/场次" />
-  <van-grid-item icon="clear" text="输/场次" />
+  <van-grid-item icon="checked" text="赢/MVP" />
+  <van-grid-item icon="clear" text="输/PVM" />
   <van-grid-item icon="fire" text="原始分" />
   <van-grid-item icon="gem" text="计算分" />
 </van-grid>

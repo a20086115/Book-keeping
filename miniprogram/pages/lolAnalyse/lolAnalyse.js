@@ -6,8 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentIndex: 0,
-    totalCountList:[],
+    
     userList:[],
     userMap:{
        "鲨鱼辣椒": { mvpTimes:0, pvmTimes:0, times: 0, winMoney:0,loseMoney:0,point: 0, calPoint: 0},
@@ -16,24 +15,62 @@ Page({
        "蟑螂恶霸": { mvpTimes:0, pvmTimes:0, times: 0, winMoney:0,loseMoney:0,point: 0, calPoint: 0},
        "根根": { mvpTimes:0, pvmTimes:0, times: 0, winMoney:0,loseMoney:0,point: 0, calPoint: 0},
        "牛逼": { mvpTimes:0, pvmTimes:0, times: 0, winMoney:0,loseMoney:0,point: 0, calPoint: 0},
-    }
+    },
+    users:[],
+    sIndexArray:["总","S1","S2"],
+    sIndex: 0,
+    winIndex: 0,
+    option1: [
+      { text: '全部赛季', value: 0 },
+      { text: 'S1', value: 1 },
+      { text: 'S2', value: 2 },
+    ],
+    totalCountList:[],
+    option2: [
+      { text: '全部记录', value: 0 },
+      { text: '胜利', value: 1 },
+      { text: '失败', value: 2 },
+    ],
   },
-
+  onIndexChange(event) {
+    this.clearMap()
+    this.data.sIndex = event.detail
+    this.calData()
+  },
+  onWinIndexChange(event) {
+    this.clearMap()
+    this.data.winIndex = event.detail
+    this.calData()
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.queryAllList()
+    // 查询users系数
+      this.queryAllList()
+  },
+   // 动态查询users列表
+   queryUsers(){
+    CF.get("lolPlayer",{}, (e) =>{
+      let users = e.result.data;
+      this.setData({users: users})
+      this.clearMap()
+      this.queryAllList()
+    })
   },
   clickTotalType(e){
     this.clearMap()
     let index = e.target.dataset.index
     this.calData(index)
     this.setData({
-      currentIndex: index
+      winIndex: index
     })
   },
   clearMap(){
+    // let map = {}
+    // for(let user of this.data.users){
+    //   map[user.name] = { mvpTimes:0, pvmTimes:0, times: 0, winMoney:0,loseMoney:0,point: 0, calPoint: 0}
+    // }
     this.data.userMap = {
       "鲨鱼辣椒": { mvpTimes:0, pvmTimes:0, times: 0, winMoney:0,loseMoney:0,point: 0, calPoint: 0},
       "蝎子莱莱": { mvpTimes:0, pvmTimes:0, times: 0, winMoney:0,loseMoney:0,point: 0, calPoint: 0},
@@ -43,19 +80,26 @@ Page({
       "牛逼": { mvpTimes:0, pvmTimes:0, times: 0, winMoney:0,loseMoney:0,point: 0, calPoint: 0},
    }
   },
-  calData(type){
+  calData(){
+    let sIndex = this.data.sIndex;
+    let type = this.data.winIndex
     let list
     if(type === 0){
-      list = this.data.list
+      list = this.data.list.filter(item => {
+        return (item.sIndex == sIndex || sIndex == 0)
+      })
     }else if(type === 1){
       list = this.data.list.filter(item => {
-        return item.win
+        return item.win && (item.sIndex == sIndex || sIndex == 0)
       })
     }else if(type === 2){
       list = this.data.list.filter(item => {
-        return !item.win
+        return !item.win && (item.sIndex == sIndex || sIndex == 0)
       })
+
     }
+    
+    this.calTotalCount(list);
       
       let userMap = this.data.userMap
       list.forEach(item => {
@@ -97,21 +141,24 @@ Page({
       }
     }).then(res =>{
       let list = res.result.data;
-      let totalCount = list.length
-      let winCount = 0;
-      let failCount = 0;
-      list.forEach(item => {
-        item.win ? winCount++ : failCount++
-      })
-      this.setData({
-        totalCountList:[
-          {icon: "like", count: totalCount, color: "#073b4c"},
-          {icon: "smile", count: winCount, color: "red"},
-          {icon: "warning", count: failCount, color: "#ef476f"}
-        ]
-      })
       this.data.list = list
+      this.calTotalCount(list);
       this.calData(0)
+    })
+  },
+  calTotalCount(list){
+    let totalCount = list.length
+    let winCount = 0;
+    let failCount = 0;
+    list.forEach(item => {
+      item.win ? winCount++ : failCount++
+    })
+    this.setData({
+      totalCountList:[
+        {icon: "friends", text: '全部记录 ' + totalCount, value: 0,count: totalCount, color: "#073b4c"},
+        {icon: "checked", text: '胜利' + winCount, value: 1, count: winCount, color: "red"},
+        {icon: "clear", text: '失败 ' + failCount, value: 2, count: failCount, color: "#ef476f"}
+      ]
     })
   },
 

@@ -1,0 +1,11 @@
+<!--miniprogram/pages/lolPlayers/lolPlayerDetail.wxml-->
+<van-cell-group>
+
+    <van-field  type="digit" id="name" bind:change="onValueChange" disabled value="{{ currentRecord.name }}"  clearable label="名字"   use-button-slot>
+    </van-field>
+
+    <van-field  type="digit" id="xs" bind:change="onValueChange" value="{{ currentRecord.xs }}"  clearable label="系数}"   use-button-slot>
+    </van-field>
+
+    <van-button class="margin-top-50" style="margin: 0 auto;" type="info"  size="large" bindtap="updatePlayer">提交</van-button>
+</van-cell-group>
