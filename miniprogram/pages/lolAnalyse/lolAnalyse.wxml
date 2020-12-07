@@ -34,10 +34,10 @@
   <!-- 表头 -->
   <van-grid-item icon="friends" text="姓名" />
   <!-- <van-grid-item name="/miniprogram/images/icon_sorts/守护者.jpg" text="赢钱" /> -->
-  <van-grid-item icon="checked" text="赢/MVP" />
-  <van-grid-item icon="clear" text="输/PVM" />
-  <van-grid-item icon="fire" text="原始分" />
-  <van-grid-item icon="gem" text="计算分" />
+  <van-grid-item icon="checked" text="赢" />
+  <van-grid-item icon="clear" text="输" />
+  <van-grid-item icon="fire" text="原始" />
+  <van-grid-item icon="gem" text="计算" />
 </van-grid>
 
 <van-grid column-num="5"  wx:for="{{ userList }}"  direction="horizontal">
