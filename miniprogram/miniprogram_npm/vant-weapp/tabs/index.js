@@ -1,100 +1,90 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var component_1 = require("../common/component");
-var touch_1 = require("../mixins/touch");
-var utils_1 = require("../common/utils");
-component_1.VantComponent({
-  mixins: [touch_1.touch],
+import { VantComponent } from '../common/component';
+import { touch } from '../mixins/touch';
+import { getAllRect, getRect, isDef } from '../common/utils';
+VantComponent({
+  mixins: [touch],
   classes: ['nav-class', 'tab-class', 'tab-active-class', 'line-class'],
   relation: {
     name: 'tab',
     type: 'descendant',
-    linked: function (target) {
-      // target.index = this.children.length;
-      // this.children.push(target);
-      this.children = this._getAllLi();
+    current: 'tabs',
+    linked(target) {
+      target.index = this.children.length - 1;
       this.updateTabs();
-      this.setLine();
     },
-    unlinked: function (target) {
-      this.children = this.children
-        .filter(function (child) { return child !== target; })
-        .map(function (child, index) {
-          child.index = index;
-          return child;
-        });
+    unlinked() {
+      this.children = this.children.map((child, index) => {
+        child.index = index;
+        return child;
+      });
       this.updateTabs();
-      this.setLine();
-    }
+    },
   },
   props: {
-    color: {
-      type: String,
-      observer: 'setLine'
-    },
     sticky: Boolean,
+    border: Boolean,
+    swipeable: Boolean,
+    titleActiveColor: String,
+    titleInactiveColor: String,
+    color: String,
     animated: {
       type: Boolean,
-      observer: 'setTrack'
+      observer() {
+        this.children.forEach((child, index) =>
+          child.updateRender(index === this.data.currentIndex, this)
+        );
+      },
     },
-    swipeable: Boolean,
     lineWidth: {
       type: [String, Number],
-      value: -1,
-      observer: 'setLine'
+      value: 40,
+      observer: 'setLine',
     },
     lineHeight: {
       type: [String, Number],
       value: -1,
-      observer: 'setLine'
     },
-    titleActiveColor: String,
-    titleInactiveColor: String,
     active: {
       type: [String, Number],
       value: 0,
-      observer: function (name) {
+      observer(name) {
         if (name !== this.getCurrentName()) {
           this.setCurrentIndexByName(name);
         }
-      }
+      },
     },
     type: {
       type: String,
-      value: 'line'
-    },
-    border: {
-      type: Boolean,
-      value: true
+      value: 'line',
     },
     ellipsis: {
       type: Boolean,
-      value: true
+      value: true,
     },
     duration: {
       type: Number,
-      value: 0.3
+      value: 0.3,
     },
     zIndex: {
       type: Number,
-      value: 1
+      value: 1,
     },
     swipeThreshold: {
       type: Number,
-      value: 4,
-      observer: function (value) {
+      value: 5,
+      observer(value) {
         this.setData({
-          scrollable: this.children.length > value || !this.data.ellipsis
+          scrollable: this.children.length > value || !this.data.ellipsis,
         });
-      }
+      },
     },
     offsetTop: {
       type: Number,
-      value: 0
+      value: 0,
     },
     lazyRender: {
       type: Boolean,
-      value: true
+      value: true,
     },
   },
   data: {
@@ -103,184 +93,187 @@ component_1.VantComponent({
     scrollLeft: 0,
     scrollable: false,
     trackStyle: '',
-    currentIndex: null,
-    container: null
+    currentIndex: 0,
+    container: null,
+    skipTransition: true,
+    lineOffsetLeft: 0,
   },
-  beforeCreate: function () {
-    this.children = [];
-  },
-  mounted: function () {
-    var _this = this;
-    this.setData({
-      container: function () { return _this.createSelectorQuery().select('.van-tabs'); }
+  mounted() {
+    wx.nextTick(() => {
+      this.setLine(true);
+      this.scrollIntoView();
     });
-    this.setLine(true);
-    this.setTrack();
-    this.scrollIntoView();
   },
   methods: {
-    updateTabs: function () {
-      var _a = this, _b = _a.children, children = _b === void 0 ? [] : _b, data = _a.data;
+    updateContainer() {
       this.setData({
-        tabs: children.map(function (child) { return child.data; }),
-        scrollable: this.children.length > data.swipeThreshold || !data.ellipsis
+        container: () => this.createSelectorQuery().select('.van-tabs'),
+      });
+    },
+    updateTabs() {
+      const { children = [], data } = this;
+      this.setData({
+        tabs: children.map((child) => child.data),
+        scrollable:
+          this.children.length > data.swipeThreshold || !data.ellipsis,
       });
       this.setCurrentIndexByName(this.getCurrentName() || data.active);
     },
-    trigger: function (eventName) {
-      var currentIndex = this.data.currentIndex;
-      var child = this.children[currentIndex];
+    trigger(eventName, child) {
+      const { currentIndex } = this.data;
+      const currentChild = child || this.children[currentIndex];
+      if (!isDef(currentChild)) {
+        return;
+      }
       this.$emit(eventName, {
-        index: currentIndex,
-        name: child.getComputedName(),
-        title: child.data.title
+        index: currentChild.index,
+        name: currentChild.getComputedName(),
+        title: currentChild.data.title,
       });
     },
-    onTap: function (event) {
-      var _this = this;
-      var index = event.currentTarget.dataset.index;
-      var child = this.children[index];
+    onTap(event) {
+      const { index } = event.currentTarget.dataset;
+      const child = this.children[index];
       if (child.data.disabled) {
-        this.trigger('disabled');
-      }
-      else {
+        this.trigger('disabled', child);
+      } else {
         this.setCurrentIndex(index);
-        wx.nextTick(function () {
-          _this.trigger('click');
+        wx.nextTick(() => {
+          this.trigger('click');
         });
       }
     },
     // correct the index of active tab
-    setCurrentIndexByName: function (name) {
-      var _a = this.children, children = _a === void 0 ? [] : _a;
-      var matched = children.filter(function (child) { return child.getComputedName() === name; });
-      var defaultIndex = (children[0] || {}).index || 0;
-      this.setCurrentIndex(matched.length ? matched[0].index : defaultIndex);
+    setCurrentIndexByName(name) {
+      const { children = [] } = this;
+      const matched = children.filter(
+        (child) => child.getComputedName() === name
+      );
+      if (matched.length) {
+        this.setCurrentIndex(matched[0].index);
+      }
     },
-    setCurrentIndex: function (currentIndex) {
-      var _this = this;
-      var _a = this, data = _a.data, _b = _a.children, children = _b === void 0 ? [] : _b;
-      if (!utils_1.isDef(currentIndex) ||
+    setCurrentIndex(currentIndex) {
+      const { data, children = [] } = this;
+      if (
+        !isDef(currentIndex) ||
         currentIndex >= children.length ||
-        currentIndex < 0) {
+        currentIndex < 0
+      ) {
         return;
       }
-      var shouldEmitChange = data.currentIndex !== null;
-      this.setData({ currentIndex: currentIndex });
-      children.forEach(function (item, index) {
-        var active = index === currentIndex;
+      children.forEach((item, index) => {
+        const active = index === currentIndex;
         if (active !== item.data.active || !item.inited) {
-          item.updateRender(active, _this);
+          item.updateRender(active, this);
         }
       });
-      wx.nextTick(function () {
-        _this.setLine();
-        _this.setTrack();
-        _this.scrollIntoView();
-        _this.trigger('input');
+      if (currentIndex === data.currentIndex) {
+        return;
+      }
+      const shouldEmitChange = data.currentIndex !== null;
+      this.setData({ currentIndex });
+      wx.nextTick(() => {
+        this.setLine();
+        this.scrollIntoView();
+        this.updateContainer();
+        this.trigger('input');
         if (shouldEmitChange) {
-          _this.trigger('change');
+          this.trigger('change');
         }
       });
     },
-    getCurrentName: function () {
-      var activeTab = this.children[this.data.currentIndex];
+    getCurrentName() {
+      const activeTab = this.children[this.data.currentIndex];
       if (activeTab) {
         return activeTab.getComputedName();
       }
     },
-    setLine: function (skipTransition) {
-      var _this = this;
+    setLine(skipTransition = false) {
       if (this.data.type !== 'line') {
         return;
       }
-      var _a = this.data, color = _a.color, duration = _a.duration, currentIndex = _a.currentIndex, lineWidth = _a.lineWidth, lineHeight = _a.lineHeight;
-      this.getRect('.van-tab', true).then(function (rects) {
-        if (rects === void 0) { rects = []; }
-        var rect = rects[currentIndex];
+      const { currentIndex, ellipsis } = this.data;
+      Promise.all([
+        getAllRect.call(this, '.van-tab'),
+        getRect.call(this, '.van-tabs__line'),
+      ]).then(([rects = [], lineRect]) => {
+        const rect = rects[currentIndex];
         if (rect == null) {
           return;
         }
-        var width = lineWidth !== -1 ? lineWidth : rect.width / 2;
-        var height = lineHeight !== -1
-          ? "height: " + utils_1.addUnit(lineHeight) + "; border-radius: " + utils_1.addUnit(lineHeight) + ";"
-          : '';
-        var left = rects
+        let lineOffsetLeft = rects
           .slice(0, currentIndex)
-          .reduce(function (prev, curr) { return prev + curr.width; }, 0);
-        left += (rect.width - width) / 2;
-        var transition = skipTransition
-          ? ''
-          : "transition-duration: " + duration + "s; -webkit-transition-duration: " + duration + "s;";
-        _this.setData({
-          lineStyle: "\n            " + height + "\n            width: " + utils_1.addUnit(width) + ";\n            background-color: " + color + ";\n            -webkit-transform: translateX(" + left + "px);\n            transform: translateX(" + left + "px);\n            " + transition + "\n          "
+          .reduce((prev, curr) => prev + curr.width, 0);
+        lineOffsetLeft +=
+          (rect.width - lineRect.width) / 2 + (ellipsis ? 0 : 8);
+        this.setData({
+          lineOffsetLeft,
+          skipTransition,
         });
       });
     },
-    setTrack: function () {
-      var _a = this.data, animated = _a.animated, duration = _a.duration, currentIndex = _a.currentIndex;
-      this.setData({
-        trackStyle: "\n          transform: translate3d(" + -100 * currentIndex + "%, 0, 0);\n          -webkit-transition-duration: " + (animated ? duration : 0) + "s;\n          transition-duration: " + (animated ? duration : 0) + "s;\n        "
-      });
-    },
     // scroll active tab into view
-    scrollIntoView: function () {
-      var _this = this;
-      var _a = this.data, currentIndex = _a.currentIndex, scrollable = _a.scrollable;
+    scrollIntoView() {
+      const { currentIndex, scrollable } = this.data;
       if (!scrollable) {
         return;
       }
       Promise.all([
-        this.getRect('.van-tab', true),
-        this.getRect('.van-tabs__nav')
-      ]).then(function (_a) {
-        var tabRects = _a[0], navRect = _a[1];
-        var tabRect = tabRects[currentIndex];
-        var offsetLeft = tabRects
+        getAllRect.call(this, '.van-tab'),
+        getRect.call(this, '.van-tabs__nav'),
+      ]).then(([tabRects, navRect]) => {
+        const tabRect = tabRects[currentIndex];
+        const offsetLeft = tabRects
           .slice(0, currentIndex)
-          .reduce(function (prev, curr) { return prev + curr.width; }, 0);
-        _this.setData({
-          scrollLeft: offsetLeft - (navRect.width - tabRect.width) / 2
+          .reduce((prev, curr) => prev + curr.width, 0);
+        this.setData({
+          scrollLeft: offsetLeft - (navRect.width - tabRect.width) / 2,
         });
       });
     },
-    onTouchScroll: function (event) {
+    onTouchScroll(event) {
       this.$emit('scroll', event.detail);
     },
-    onTouchStart: function (event) {
-      if (!this.data.swipeable)
-        return;
+    onTouchStart(event) {
+      if (!this.data.swipeable) return;
       this.touchStart(event);
     },
-    onTouchMove: function (event) {
-      if (!this.data.swipeable)
-        return;
+    onTouchMove(event) {
+      if (!this.data.swipeable) return;
       this.touchMove(event);
     },
     // watch swipe touch end
-    onTouchEnd: function () {
-      if (!this.data.swipeable)
-        return;
-      var _a = this.data, tabs = _a.tabs, currentIndex = _a.currentIndex;
-      var _b = this, direction = _b.direction, deltaX = _b.deltaX, offsetX = _b.offsetX;
-      var minSwipeDistance = 50;
+    onTouchEnd() {
+      if (!this.data.swipeable) return;
+      const { direction, deltaX, offsetX } = this;
+      const minSwipeDistance = 50;
       if (direction === 'horizontal' && offsetX >= minSwipeDistance) {
-        if (deltaX > 0 && currentIndex !== 0) {
-          this.setCurrentIndex(currentIndex - 1);
-        }
-        else if (deltaX < 0 && currentIndex !== tabs.length - 1) {
-          this.setCurrentIndex(currentIndex + 1);
+        const index = this.getAvaiableTab(deltaX);
+        if (index !== -1) {
+          this.setCurrentIndex(index);
         }
       }
     },
-    _getAllLi: function () {
-      // 使用getRelationNodes可以获得nodes数组，包含所有已关联的custom-li，且是有序的
-      var nodes = this.getRelationNodes('../tab/index')
-      nodes.map((child, index) => {
-        child.index = index;
-        return child;
-      })
-      return nodes;
-    }
-  }
+    getAvaiableTab(direction) {
+      const { tabs, currentIndex } = this.data;
+      const step = direction > 0 ? -1 : 1;
+      for (
+        let i = step;
+        currentIndex + i < tabs.length && currentIndex + i >= 0;
+        i += step
+      ) {
+        const index = currentIndex + i;
+        if (
+          index >= 0 &&
+          index < tabs.length &&
+          tabs[index] &&
+          !tabs[index].disabled
+        ) {
+          return index;
+        }
+      }
+      return -1;
+    },
+  },
 });

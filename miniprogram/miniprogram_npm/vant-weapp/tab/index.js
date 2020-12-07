@@ -1,61 +1,59 @@
 import { VantComponent } from '../common/component';
 VantComponent({
-    relation: {
-        name: 'tabs',
-        type: 'ancestor',
-        linked(target) {
-          console.log(target, "_____________________linked")
-            this.parent = target;
-        },
-        linkChanged: function (target) {
-          // 每次有custom-li被移动后执行，target是该节点实例对象，触发在该节点moved生命周期之后
-          console.log(target, "_____________________move")
-        },
-        unlinked() {
-            this.parent = null;
-        }
+  relation: {
+    name: 'tabs',
+    type: 'ancestor',
+    current: 'tab',
+  },
+  props: {
+    dot: {
+      type: Boolean,
+      observer: 'update',
     },
-    props: {
-        dot: Boolean,
-        info: null,
-        title: String,
-        disabled: Boolean,
-        titleStyle: String,
-        name: {
-            type: [Number, String],
-            value: '',
-        }
+    info: {
+      type: null,
+      observer: 'update',
     },
-    data: {
-        active: false
+    title: {
+      type: String,
+      observer: 'update',
     },
-    watch: {
-        title: 'update',
-        disabled: 'update',
-        dot: 'update',
-        info: 'update',
-        titleStyle: 'update'
+    disabled: {
+      type: Boolean,
+      observer: 'update',
     },
-    methods: {
-        getComputedName() {
-            if (this.data.name !== '') {
-                return this.data.name;
-            }
-            return this.index;
-        },
-        updateRender(active, parent) {
-            const { data: parentData } = parent;
-            this.inited = this.inited || active;
-            this.setData({
-                active,
-                shouldRender: this.inited || !parentData.lazyRender,
-                shouldShow: active || parentData.animated
-            });
-        },
-        update() {
-            if (this.parent) {
-                this.parent.updateTabs();
-            }
-        }
-    }
+    titleStyle: {
+      type: String,
+      observer: 'update',
+    },
+    name: {
+      type: [Number, String],
+      value: '',
+    },
+  },
+  data: {
+    active: false,
+  },
+  methods: {
+    getComputedName() {
+      if (this.data.name !== '') {
+        return this.data.name;
+      }
+      return this.index;
+    },
+    updateRender(active, parent) {
+      const { data: parentData } = parent;
+      this.inited = this.inited || active;
+      this.setData({
+        active,
+        shouldRender: this.inited || !parentData.lazyRender,
+        shouldShow: active || parentData.animated,
+      });
+    },
+    update() {
+      if (this.parent) {
+        this.parent.updateTabs();
+      }
+    },
+  },
 });

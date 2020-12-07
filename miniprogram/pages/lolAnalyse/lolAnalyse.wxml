@@ -1,3 +1,29 @@
+<view style="background:white;display:flex;padding:20rpx; justify-content: space-around;">
+  <van-tag type="primary" size="large" bindtap="selectToday">今天</van-tag>
+  <van-tag type="primary" size="large" bindtap="selectLastDay">昨天</van-tag>
+  <van-tag type="primary" size="large" bindtap="selectLastWeek">最近一周</van-tag>
+  <van-tag type="primary" size="large" bindtap="selectLastMonth">最近一月</van-tag>
+</view>
+ 
+
+ <van-cell title="开始时间"  >
+  <view data-key="beginDate" bindtap="onDisplay"> {{beginDate || '选择时间'}} </view>
+  <van-icon slot="right-icon" name="clear" class="custom-icon" bind:click="clearBeginDate"/>
+</van-cell>
+
+<van-cell title="结束时间" >
+  <view data-key="endDate"  bindtap="onDisplay"> {{endDate || '选择时间'}} </view>
+ <van-icon slot="right-icon" name="clear" class="custom-icon" bind:click="clearEndDate" />
+</van-cell>
+
+<van-calendar
+  show="{{ show }}" 
+  show-confirm="{{ false }}"
+  min-date="{{ minDate }}"
+  max-date="{{ maxDate }}"
+  bind:close="onClose"
+  bind:confirm="onConfirm"
+/>
 
 <van-dropdown-menu>
   <van-dropdown-item value="{{ sIndex }}" bind:change="onIndexChange" options="{{ option1 }}" />
@@ -31,3 +57,17 @@
     <span class="t-small"> {{ item.calPoint }}</span>
   </van-grid-item>
 </van-grid>
+
+<scroll-view scroll-y="true" >
+    <van-row wx:for="{{calList}}" wx:key="id" class="itemRow" >
+      <van-cell value="{{item.pvm}} - {{item.loseAmount}}" color="red" data-id="{{item._id}}" bindtap="goToDetail" is-link>
+        <view slot="title">
+        <view style="display:flex">
+          <van-tag wx:if="{{item.win}}" mark type="success">胜</van-tag>
+          <van-tag wx:else="{{item.win}}" mark type="danger">败</van-tag>
+          <view style="margin-left:10rpx">{{item.mvp}} + {{item.winAmount}}</view>
+        </view>
+        </view>
+      </van-cell>
+    </van-row>
+</scroll-view>
